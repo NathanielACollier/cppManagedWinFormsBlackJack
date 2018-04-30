@@ -32,7 +32,7 @@ namespace blackjack
 	///          the designers will not be able to interact properly with localized
 	///          resources associated with this form.
 	/// </summary>
-	public __gc class Form1 : public System::Windows::Forms::Form
+	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	public:
 		Form1(void) // constructor (where members are initialized)
@@ -497,7 +497,7 @@ protected:	void Dispose(Boolean disposing)
 		void InitializeComponent(void)
 		{
 			this->components = (new System::ComponentModel::Container());
-			System::ComponentModel::ComponentResourceManager*  resources = (new System::ComponentModel::ComponentResourceManager(__typeof(Form1)));
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(Form1::typeid));
 			this->MainMenu = (new System::Windows::Forms::MainMenu(this->components));
 			this->menuItem1 = (new System::Windows::Forms::MenuItem());
 			this->NewGame_item = (new System::Windows::Forms::MenuItem());
