@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="BlackjackGame.HighScoreWindow"
+        Title="SV Blackjack High Score List"
+        Width="700" Height="450"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+
+    <DockPanel>
+        <!-- Header Row -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="#F0F0F0" Height="40">
+            <TextBlock Text="Date" Width="176" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+            <TextBlock Text="Player Name" Width="176" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+            <TextBlock Text="Player Score" Width="176" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+            <TextBlock Text="Computer Score" Width="172" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+        </StackPanel>
+
+        <!-- Scores Display -->
+        <TextBox Name="ScoresTextBox"
+                 DockPanel.Dock="Top"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 Margin="31,10,10,60"
+                 FontFamily="Courier New"
+                 FontSize="10"
+                 AcceptsReturn="True"/>
+
+        <!-- OK Button -->
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Height="50">
+            <Button Content="OK"
+                    Width="100"
+                    Height="30"
+                    Click="OnClose"/>
+        </StackPanel>
+
+    </DockPanel>
+
+</Window>

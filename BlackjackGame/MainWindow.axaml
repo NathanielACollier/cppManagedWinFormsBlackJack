@@ -1,0 +1,97 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="BlackjackGame.MainWindow"
+        Title="Blackjack Game v2.0"
+        Width="1024" Height="768"
+        Background="DarkGreen">
+
+    <DockPanel>
+        <!-- Menu Bar -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New Game" Click="OnNewGame"/>
+                <MenuItem Header="_Undo" Click="OnUndo"/>
+                <MenuItem Header="_About" Click="OnAbout"/>
+                <MenuItem Header="_High Scores" Click="OnHighScores"/>
+                <Separator/>
+                <MenuItem Header="E_xit" Click="OnExit"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Status Bar -->
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="#F0F0F0" Margin="5">
+            <TextBlock Name="StatusLabel" VerticalAlignment="Center" Text="Ready to Play"/>
+        </StackPanel>
+
+        <!-- Main Game Area -->
+        <ScrollViewer DockPanel.Dock="Top">
+            <StackPanel Orientation="Vertical" Margin="10" Spacing="10">
+
+                <!-- Card Drawn Area -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Name="CardDrawn" Width="71" Height="96" Stretch="UniformToFill"/>
+                </StackPanel>
+
+                <!-- Player Cards Row -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+                    <Image Name="Card1" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card2" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card3" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card4" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card5" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card6" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card7" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card8" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card9" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card10" Width="71" Height="96" Stretch="UniformToFill"/>
+                    <Image Name="Card11" Width="71" Height="96" Stretch="UniformToFill"/>
+                </StackPanel>
+
+                <!-- Bonus Cards Row -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+                    <Image Name="BonusCard1" Width="60" Height="80" Stretch="UniformToFill"/>
+                    <Image Name="BonusCard2" Width="60" Height="80" Stretch="UniformToFill"/>
+                    <Image Name="BonusCard3" Width="60" Height="80" Stretch="UniformToFill"/>
+                    <Image Name="BonusCard4" Width="60" Height="80" Stretch="UniformToFill"/>
+                </StackPanel>
+
+                <!-- Hit/Stay Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
+                    <Button Name="HitButton" Content="Hit" Width="80" Height="40" Click="OnHit"/>
+                    <Button Name="StayButton" Content="Stay" Width="80" Height="40" Click="OnStay"/>
+                </StackPanel>
+
+                <!-- Score Display -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <StackPanel Orientation="Vertical" Spacing="5">
+                        <TextBlock Text="Player Score:" FontWeight="Bold"/>
+                        <TextBlock Name="PlayerScoreTextBox" Text="0" FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Spacing="5">
+                        <TextBlock Text="Computer Score:" FontWeight="Bold"/>
+                        <TextBlock Name="ComputerScoreTextBox" Text="0" FontSize="18"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Win Counts -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <StackPanel Orientation="Vertical" Spacing="5">
+                        <TextBlock Text="Player Wins:" FontWeight="Bold"/>
+                        <TextBlock Name="PlayerWinTextBox" Text="0" FontSize="16"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Spacing="5">
+                        <TextBlock Text="Computer Wins:" FontWeight="Bold"/>
+                        <TextBlock Name="ComputerWinTextBox" Text="0" FontSize="16"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Spacing="5">
+                        <TextBlock Text="Draws:" FontWeight="Bold"/>
+                        <TextBlock Name="NoneWinsTextBox" Text="0" FontSize="16"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </DockPanel>
+
+</Window>
