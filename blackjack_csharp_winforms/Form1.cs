@@ -506,7 +506,6 @@ namespace blackjack
             this.Controls.Add(this.CardCountLabel);
             this.Controls.Add(this.cardcount_textbox);
             this.Controls.Add(this.handTextbox);
-            this.MainMenuStrip = this.MainMenuStrip;
             this.Name = "Form1";
             this.Text = "Blackjack";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -1046,7 +1045,6 @@ namespace blackjack
         }
 
         private System.ComponentModel.Container components;
-        private MenuStrip MainMenuStrip;
         private ToolStripMenuItem gameMenu;
         private ToolStripMenuItem newGameItem;
         private ToolStripMenuItem undoItem;
