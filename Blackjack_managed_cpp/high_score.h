@@ -39,14 +39,8 @@ namespace blackjack
 {
 	/// <summary> 
 	/// Summary for high_score
-	///
-	/// WARNING: If you change the name of this class, you will need to change the 
-	///          'Resource File Name' property for the managed resource compiler tool 
-	///          associated with all .resx files this class depends on.  Otherwise,
-	///          the designers will not be able to interact properly with localized
-	///          resources associated with this form.
 	/// </summary>
-	public __gc class high_score : public System::Windows::Forms::Form
+	public ref class high_score : public System::Windows::Forms::Form
 	{
 	public: 
 		high_score(void)
@@ -55,14 +49,13 @@ namespace blackjack
 			save_game_list = new list< high_score_entry >;
 			temp_game_save = new high_score_entry;
 			buffer = new ostringstream;
-		
 		}
 
 	list< high_score_entry >* save_game_list;
 	high_score_entry* temp_game_save;
 	ostringstream* buffer;
-	
-	private: System::Windows::Forms::Label*  high_score_table;
+
+	private: System::Windows::Forms::Label^  high_score_table;
 
 
     
@@ -78,8 +71,8 @@ namespace blackjack
        *buffer<< " " << current->date << " " << current->player_name << " " << current->player_score << " " << current->computer_score << "\n\n\n";
 	 
 	 }
-     string temp = buffer->str();
-	 high_score_table->Text = temp.c_str();
+    string temp = buffer->str();
+	high_score_table->Text = gcnew System::String(temp.c_str());
 	 buffer->str("");      
 	}
 			 
@@ -121,16 +114,16 @@ namespace blackjack
 			}
 			__super::Dispose(disposing);
 		}
-	private: System::Windows::Forms::Label *  label1;
-	private: System::Windows::Forms::Label *  label2;
-	private: System::Windows::Forms::Label *  label3;
-	private: System::Windows::Forms::Label *  label4;
+    private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
-		/// </summary>
-		System::ComponentModel::Container* components;
+        /// </summary>
+		System::ComponentModel::Container^ components;
 
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -138,61 +131,61 @@ namespace blackjack
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->label1 = (new System::Windows::Forms::Label());
-			this->label2 = (new System::Windows::Forms::Label());
-			this->label3 = (new System::Windows::Forms::Label());
-			this->label4 = (new System::Windows::Forms::Label());
-			this->high_score_table = (new System::Windows::Forms::Label());
+        this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->high_score_table = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// label1
 			// 
-			this->label1->Font = (new System::Drawing::Font(S"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+            this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				(System::Byte)0));
 			this->label1->Location = System::Drawing::Point(176, 8);
-			this->label1->Name = S"label1";
+			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(176, 32);
 			this->label1->TabIndex = 0;
-			this->label1->Text = S"Player Name";
+			this->label1->Text = L"Player Name";
 			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// label2
 			// 
-			this->label2->Font = (new System::Drawing::Font(S"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+            this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				(System::Byte)0));
 			this->label2->Location = System::Drawing::Point(352, 8);
-			this->label2->Name = S"label2";
+			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(176, 32);
 			this->label2->TabIndex = 1;
-			this->label2->Text = S"Player Score";
+			this->label2->Text = L"Player Score";
 			this->label2->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// label3
 			// 
-			this->label3->Font = (new System::Drawing::Font(S"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+            this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				(System::Byte)0));
 			this->label3->Location = System::Drawing::Point(528, 8);
-			this->label3->Name = S"label3";
+			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(176, 32);
 			this->label3->TabIndex = 2;
-			this->label3->Text = S"Computer Score";
+			this->label3->Text = L"Computer Score";
 			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// label4
 			// 
-			this->label4->Font = (new System::Drawing::Font(S"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+            this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				(System::Byte)0));
 			this->label4->Location = System::Drawing::Point(0, 8);
-			this->label4->Name = S"label4";
+			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(176, 32);
 			this->label4->TabIndex = 3;
-			this->label4->Text = S"Date";
+			this->label4->Text = L"Date";
 			this->label4->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// high_score_table
 			// 
-			this->high_score_table->Location = System::Drawing::Point(31, 55);
-			this->high_score_table->Name = S"high_score_table";
+            this->high_score_table->Location = System::Drawing::Point(31, 55);
+			this->high_score_table->Name = L"high_score_table";
 			this->high_score_table->Size = System::Drawing::Size(659, 372);
 			this->high_score_table->TabIndex = 4;
 			// 
@@ -205,13 +198,13 @@ namespace blackjack
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
-			this->Name = S"high_score";
-			this->Text = S"SV Blackjack High Score List";
-			this->Load += new System::EventHandler(this, &high_score::high_score_Load);
+            this->Name = L"high_score";
+			this->Text = L"SV Blackjack High Score List";
+			this->Load += gcnew System::EventHandler(this, &high_score::high_score_Load);
 			this->ResumeLayout(false);
 
 		}		
-	private: System::Void high_score_Load(System::Object*  sender, System::EventArgs*  e) 
+    private: System::Void high_score_Load(System::Object^ sender, System::EventArgs^ e) 
 			 {
 			   load_save_game();
 			 }

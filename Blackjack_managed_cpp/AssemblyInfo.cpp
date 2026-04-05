@@ -1,3 +1,5 @@
+#using <mscorlib.dll>
+#using <System.dll>
 #include "stdafx.h"
 
 using namespace System::Reflection;
