@@ -18,6 +18,7 @@ namespace blackjack
         private HighScoreEntry current_game;
         private int[] bv;
         private bool new_game_flag;
+        private ImageList cardlist;
 
         private const string SAVE_GAME_FILE = "save_game.txt";
         private const int DECKL = 52;
@@ -45,6 +46,7 @@ namespace blackjack
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 
+            this.cardlist = new System.Windows.Forms.ImageList(this.components);
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.gameMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.newGameItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -711,7 +713,7 @@ namespace blackjack
             cardcount_textbox.Text = temp;
             buffer.Clear();
             Card cur_card = pc.GetCurrentCard();
-            // card_drawn.Image would be set from image list
+            card_drawn.Image = cardlist.Images[cur_card.Index];
             DisplayCards();
         }
 
@@ -760,22 +762,22 @@ namespace blackjack
             int x = pc.GetNumCards();
 
             if (x == 1) return;
-            if (x >= 2) { /* card1.Image = cardlist.Images[pc.GetCardIndex(0)]; */ }
-            if (x >= 3) { /* card2.Image = cardlist.Images[pc.GetCardIndex(1)]; */ }
-            if (x >= 4) { /* card3.Image = cardlist.Images[pc.GetCardIndex(2)]; */ }
-            if (x >= 5) { /* card4.Image = cardlist.Images[pc.GetCardIndex(3)]; */ }
-            if (x >= 6) { /* card5.Image = cardlist.Images[pc.GetCardIndex(4)]; */ }
-            if (x >= 7) { /* card6.Image = cardlist.Images[pc.GetCardIndex(5)]; */ }
-            if (x >= 8) { /* card7.Image = cardlist.Images[pc.GetCardIndex(6)]; */ }
-            if (x >= 9) { /* card8.Image = cardlist.Images[pc.GetCardIndex(7)]; */ }
-            if (x >= 10) { /* card9.Image = cardlist.Images[pc.GetCardIndex(8)]; */ }
-            if (x >= 11) { /* card10.Image = cardlist.Images[pc.GetCardIndex(9)]; */ }
-            if (x >= 12) { /* card11.Image = cardlist.Images[pc.GetCardIndex(10)]; */ }
+            if (x >= 2) { card1.Image = cardlist.Images[pc.GetCardIndex(0)]; }
+            if (x >= 3) { card2.Image = cardlist.Images[pc.GetCardIndex(1)]; }
+            if (x >= 4) { card3.Image = cardlist.Images[pc.GetCardIndex(2)]; }
+            if (x >= 5) { card4.Image = cardlist.Images[pc.GetCardIndex(3)]; }
+            if (x >= 6) { card5.Image = cardlist.Images[pc.GetCardIndex(4)]; }
+            if (x >= 7) { card6.Image = cardlist.Images[pc.GetCardIndex(5)]; }
+            if (x >= 8) { card7.Image = cardlist.Images[pc.GetCardIndex(6)]; }
+            if (x >= 9) { card8.Image = cardlist.Images[pc.GetCardIndex(7)]; }
+            if (x >= 10) { card9.Image = cardlist.Images[pc.GetCardIndex(8)]; }
+            if (x >= 11) { card10.Image = cardlist.Images[pc.GetCardIndex(9)]; }
+            if (x >= 12) { card11.Image = cardlist.Images[pc.GetCardIndex(10)]; }
         }
 
         private void ClearCards()
         {
-            /* card_drawn.Image = cardlist.Images[54]; */
+            card_drawn.Image = cardlist.Images[54];
             card1.Image = null;
             card2.Image = null;
             card3.Image = null;
@@ -804,25 +806,25 @@ namespace blackjack
             {
                 bonus_card1.Show();
                 bv[0] = RNUM(55, 64);
-                /* bonus_card1.Image = cardlist.Images[bv[0]]; */
+                bonus_card1.Image = cardlist.Images[bv[0]];
             }
             if (pscore >= 30)
             {
                 bonus_card2.Show();
                 bv[1] = RNUM(55, 64);
-                /* bonus_card2.Image = cardlist.Images[bv[1]]; */
+                bonus_card2.Image = cardlist.Images[bv[1]];
             }
             if (pscore >= 45)
             {
                 bonus_card3.Show();
                 bv[2] = RNUM(55, 64);
-                /* bonus_card3.Image = cardlist.Images[bv[2]]; */
+                bonus_card3.Image = cardlist.Images[bv[2]];
             }
             if (pscore >= 60)
             {
                 bonus_card4.Show();
                 bv[3] = RNUM(55, 64);
-                /* bonus_card4.Image = cardlist.Images[bv[3]]; */
+                bonus_card4.Image = cardlist.Images[bv[3]];
             }
         }
 
@@ -858,7 +860,8 @@ namespace blackjack
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // card_drawn.Image = cardlist.Images[54];
+            LoadCardImages();
+            card_drawn.Image = cardlist.Images[54];
             computerscoreTextbox.Text = "0";
             computerwinTextbox.Text = "0";
             cardcount_textbox.Text = "0";
@@ -936,7 +939,7 @@ namespace blackjack
             cardcount_textbox.Text = temp;
             buffer.Clear();
             Card cur_card = pc.GetCurrentCard();
-            // card_drawn.Image = cardlist.Images[cur_card.Index];
+            card_drawn.Image = cardlist.Images[cur_card.Index];
             DisplayBonus();
         }
 
@@ -988,6 +991,53 @@ namespace blackjack
         {
             HighScoreForm score_table = new HighScoreForm();
             score_table.Show();
+        }
+
+        private static int RNUM(int min, int max)
+        {
+            return new Random().Next(min, max + 1);
+        }
+
+        private void LoadCardImages()
+        {
+            string[] cardImageNames = new string[]
+            {
+                "ace_heart.bmp", "ace_diamond.bmp", "ace_spade.bmp", "ace_club.bmp",
+                "two_heart.bmp", "two_diamond.bmp", "two_spade.bmp", "two_club.bmp",
+                "three_heart.bmp", "three_diamond.bmp", "three_spade.bmp", "three_club.bmp",
+                "four_heart.bmp", "four_diamond.bmp", "four_spade.bmp", "four_club.bmp",
+                "five_heart.bmp", "five_diamond.bmp", "five_spade.bmp", "five_club.bmp",
+                "six_heart.bmp", "six_diamond.bmp", "six_spade.bmp", "six_club.bmp",
+                "seven_heart.bmp", "seven_diamond.bmp", "seven_spade.bmp", "seven_club.bmp",
+                "eight_heart.bmp", "eight_diamond.bmp", "eight_spade.bmp", "eight_club.bmp",
+                "nine_heart.bmp", "nine_diamond.bmp", "nine_spade.bmp", "nine_club.bmp",
+                "ten_heart.bmp", "ten_diamond.bmp", "ten_spade.bmp", "ten_club.bmp",
+                "jack_heart.bmp", "jack_diamond.bmp", "jack_spade.bmp", "jack_club.bmp",
+                "queen_heart.bmp", "queen_diamond.bmp", "queen_spade.bmp", "queen_club.bmp",
+                "king_heart.bmp", "king_diamond.bmp", "king_spade.bmp", "king_club.bmp",
+                "joker_one.bmp", "joker_two.bmp",
+                "back_bj.bmp",
+                "back_bj.bmp", "back_bj.bmp", "back_bj.bmp", "back_bj.bmp", "back_bj.bmp",
+                "back_bj.bmp", "back_bj.bmp", "back_bj.bmp", "back_bj.bmp"
+            };
+
+            string resourcePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
+
+            cardlist.ImageSize = new Size(71, 96);
+            cardlist.ColorDepth = ColorDepth.Depth24Bit;
+
+            foreach (string imageName in cardImageNames)
+            {
+                string imagePath = Path.Combine(resourcePath, imageName);
+                if (File.Exists(imagePath))
+                {
+                    cardlist.Images.Add(Image.FromFile(imagePath));
+                }
+                else
+                {
+                    cardlist.Images.Add(null);
+                }
+            }
         }
 
         private static int RNUM(int min, int max)
