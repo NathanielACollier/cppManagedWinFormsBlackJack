@@ -892,9 +892,9 @@ namespace blackjack
 
         private void menuItem3_Click(object sender, EventArgs e)
         {
-            int x = MessageBox.Show("Exit Blackjack ?", "", MessageBoxButtons.YesNo);
+            var x = MessageBox.Show("Exit Blackjack ?", "", MessageBoxButtons.YesNo);
 
-            if (x == (int)DialogResult.Yes)
+            if (x == DialogResult.Yes)
             {
                 SaveGame();
                 Application.Exit();
@@ -1034,15 +1034,11 @@ namespace blackjack
                 }
                 else
                 {
-                    cardlist.Images.Add(null);
+                    throw new Exception($"Image file [{imageName}] not found");
                 }
             }
         }
 
-        private static int RNUM(int min, int max)
-        {
-            return new Random().Next(min, max + 1);
-        }
 
         private System.ComponentModel.Container components;
         private ToolStripMenuItem gameMenu;
