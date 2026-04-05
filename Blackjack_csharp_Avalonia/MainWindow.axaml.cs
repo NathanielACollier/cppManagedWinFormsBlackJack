@@ -171,7 +171,7 @@ namespace BlackjackGame
             {
                 if (i + 2 <= x)
                 {
-                    images[i].Source = GetCardImage(playerCharacter.GetCardIndex(i + 1));
+                    images[i].Source = GetCardImage(playerCharacter.GetCardIndex(i));
                 }
             }
         }
@@ -222,7 +222,7 @@ namespace BlackjackGame
 
         private void DisplayBonus()
         {
-            int playerScore = playerCharacter.GetTotalScore();
+            int playerScore = playerCharacter.CountCards();
 
             var bonusImages = new[] {
                 this.FindControl<Image>("BonusCard1"),
@@ -270,10 +270,7 @@ namespace BlackjackGame
 
             for (int i = 0; i < 52; ++i)
             {
-                if (i < deck.GetLength())
-                {
-                    deckCards[i] = deck.Draw();
-                }
+                deckCards[i] = deck.Draw();
             }
             deck.Dispose();
         }
@@ -298,8 +295,8 @@ namespace BlackjackGame
 
             var playerScoreBox = this.FindControl<TextBlock>("PlayerScoreTextBox");
             var computerScoreBox = this.FindControl<TextBlock>("ComputerScoreTextBox");
-            playerScoreBox.Text = playerCharacter.GetTotalScore().ToString();
-            computerScoreBox.Text = computer.GetTotalScore().ToString();
+            playerScoreBox.Text = playerCharacter.CountCards().ToString();
+            computerScoreBox.Text = computer.CountCards().ToString();
 
             var hitButton = this.FindControl<Button>("HitButton");
             var stayButton = this.FindControl<Button>("StayButton");
