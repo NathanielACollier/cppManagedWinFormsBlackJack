@@ -4,7 +4,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="blackjack_csharp_winforms/blackjack_csharp_winforms.csproj" />
-  <Project Path="Blackjack_managed_cpp/blackjack.vcxproj" Id="3783fcdd-1917-4a64-9fad-e5c55329f72b">
+  <Project Path="Blackjack_managed_cpp/Blackjack_managed_cpp.vcxproj" Id="3783fcdd-1917-4a64-9fad-e5c55329f72b">
     <Platform Project="Win32" />
   </Project>
 </Solution>
