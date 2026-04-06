@@ -23,6 +23,11 @@
     <CharacterSet>MultiByte</CharacterSet>
     <CommonLanguageRuntimeSupport>clr</CommonLanguageRuntimeSupport>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <!-- ⭐ Correct location for disabling JMC -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <SupportJustMyCode>false</SupportJustMyCode>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -42,6 +47,11 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <!-- Force off JMC and force /EHsc last -->
+      <AdditionalOptions>/JMC- /EHsc %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -57,6 +67,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <!-- Hard override: make sure /EHsc is last -->
+      <AdditionalOptions>/EHsc %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
