@@ -47,12 +47,13 @@ namespace blackjack
 			InitializeComponent();
 		}
 
-		~Form1(void) // Destructor (where memory is released)
+       ~Form1(void) // Destructor (where memory is released)
 		{
 		 delete sdeck;
 		 delete pc;
 		 delete computer;
 		 delete buffer;
+		 if (components) delete components;
 		}
 	card * sdeck;
 	ostringstream* buffer;  // output string stream - very usefull stl class
@@ -98,14 +99,8 @@ namespace blackjack
 	private: System::Windows::Forms::MenuItem^  Exit_item;
 
 
-protected:	void Dispose(Boolean disposing)
-		{
-			if (disposing && components)
-			{
-				components->Dispose();
-			}
-			__super::Dispose(disposing);
-		}
+protected:
+		// Designer cleanup moved to destructor
 
     private: System::Windows::Forms::MenuItem^  menuItem1;
 
@@ -210,27 +205,27 @@ protected:	void Dispose(Boolean disposing)
      
 	 if( x == 1 ) return;
      if( x >= 2 )
-		 card1->Image = cardlist->Images->get_Item( pc->get_cardindex(0));
-	 if( x >= 3 )
-		 card2->Image = cardlist->Images->get_Item( pc->get_cardindex(1));
-	 if( x >= 4 )
-		 card3->Image = cardlist->Images->get_Item( pc->get_cardindex(2));
-	 if( x >= 5 )
-		 card4->Image = cardlist->Images->get_Item( pc->get_cardindex(3));
-	 if( x >= 6 )
-		 card5->Image = cardlist->Images->get_Item( pc->get_cardindex(4));
-	 if( x >= 7 )
-		 card6->Image = cardlist->Images->get_Item( pc->get_cardindex(5));
-	 if( x >= 8 )
-		 card7->Image = cardlist->Images->get_Item( pc->get_cardindex(6));
-	 if( x >= 9 )
-		 card8->Image = cardlist->Images->get_Item( pc->get_cardindex(7));
-	 if( x >= 10)
-		 card9->Image = cardlist->Images->get_Item( pc->get_cardindex(8));
-	 if( x >= 11)
-		 card10->Image = cardlist->Images->get_Item( pc->get_cardindex(9));
-	 if( x >= 12)
-		 card11->Image = cardlist->Images->get_Item( pc->get_cardindex(10));
+		 card1->Image = cardlist->Images[ pc->get_cardindex(0) ];
+     if( x >= 3 )
+		 card2->Image = cardlist->Images[ pc->get_cardindex(1) ];
+     if( x >= 4 )
+		 card3->Image = cardlist->Images[ pc->get_cardindex(2) ];
+     if( x >= 5 )
+		 card4->Image = cardlist->Images[ pc->get_cardindex(3) ];
+     if( x >= 6 )
+		 card5->Image = cardlist->Images[ pc->get_cardindex(4) ];
+     if( x >= 7 )
+		 card6->Image = cardlist->Images[ pc->get_cardindex(5) ];
+     if( x >= 8 )
+		 card7->Image = cardlist->Images[ pc->get_cardindex(6) ];
+     if( x >= 9 )
+		 card8->Image = cardlist->Images[ pc->get_cardindex(7) ];
+     if( x >= 10)
+		 card9->Image = cardlist->Images[ pc->get_cardindex(8) ];
+     if( x >= 11)
+		 card10->Image = cardlist->Images[ pc->get_cardindex(9) ];
+     if( x >= 12)
+		 card11->Image = cardlist->Images[ pc->get_cardindex(10) ];
 
 	}
     
@@ -241,7 +236,7 @@ protected:	void Dispose(Boolean disposing)
 	*/
 	void clear_cards()
 	{
-    card_drawn->Image = cardlist->Images->get_Item(54);
+    card_drawn->Image = cardlist->Images[54];
 	card1->Image = nullptr;
 	 card2->Image = nullptr; card3->Image = nullptr; card4->Image = nullptr; card5->Image = nullptr;
 	card6->Image = nullptr; card7->Image = nullptr; card8->Image = nullptr; card9->Image = nullptr; card10->Image = nullptr;
@@ -258,25 +253,25 @@ protected:	void Dispose(Boolean disposing)
 	 {
 		 bonus_card1->Show();
          bv[0] = RNUM( 55, 64 );
-		 bonus_card1->Image = cardlist->Images->get_Item( bv[0] );
+         bonus_card1->Image = cardlist->Images[ bv[0] ];
 	 }
 	 if( pscore >= 30 ) 
 	 {
 		 bonus_card2->Show();
              bv[1] = RNUM( 55, 64 );
-			 bonus_card2->Image = cardlist->Images->get_Item( bv[1] );
+             bonus_card2->Image = cardlist->Images[ bv[1] ];
 	 }
 	 if( pscore >= 45 )
 	 {
 	     bonus_card3->Show();
          bv[2] = RNUM( 55, 64 );
-		 bonus_card3->Image = cardlist->Images->get_Item( bv[2] );
+         bonus_card3->Image = cardlist->Images[ bv[2] ];
 	 }
 	 if( pscore >= 60 ) 
 	 {
          bonus_card4->Show();
          bv[3] = RNUM( 55, 64 );
-		 bonus_card4->Image = cardlist->Images->get_Item( bv[3] );
+         bonus_card4->Image = cardlist->Images[ bv[3] ];
 	 }
 	}
 
@@ -438,7 +433,7 @@ protected:	void Dispose(Boolean disposing)
         cardcount_textbox->Text = gcnew System::String(temp.c_str()); // sets cardcount_textbox to the string(const char*)
 		buffer->str(""); // clears out the buffer
 		card cur_card = pc->get_currentcard(); // gets the card that was drawn when hit was pressed
-        card_drawn->Image = cardlist->Images->get_Item(  cur_card.index  ); // uses the cardlist image list and the index of the
+        card_drawn->Image = cardlist->Images[ cur_card.index ]; // uses the cardlist image list and the index of the
 			                                                                         // current card to display the card drawn
 		display_cards(); 
 	}
@@ -561,7 +556,7 @@ protected:	void Dispose(Boolean disposing)
 			// 
 			// MainMenu
 			// 
-            array<System::Windows::Forms::MenuItem^>^ __mcTemp__1 = gcnew array<System::Windows::Forms::MenuItem^>(2);
+            cli::array<System::Windows::Forms::MenuItem^>^ __mcTemp__1 = gcnew cli::array<System::Windows::Forms::MenuItem^>(2);
 			__mcTemp__1[0] = this->menuItem1;
 			__mcTemp__1[1] = this->menuItem2;
 			this->MainMenu->MenuItems->AddRange(__mcTemp__1);
@@ -569,7 +564,7 @@ protected:	void Dispose(Boolean disposing)
 			// menuItem1
 			// 
 			this->menuItem1->Index = 0;
-            array<System::Windows::Forms::MenuItem^>^ __mcTemp__2 = gcnew array<System::Windows::Forms::MenuItem^>(4);
+            cli::array<System::Windows::Forms::MenuItem^>^ __mcTemp__2 = gcnew cli::array<System::Windows::Forms::MenuItem^>(4);
 			__mcTemp__2[0] = this->NewGame_item;
 			__mcTemp__2[1] = this->undo_item;
 			__mcTemp__2[2] = this->highscore_menu;
@@ -607,7 +602,7 @@ protected:	void Dispose(Boolean disposing)
 			// menuItem2
 			// 
 			this->menuItem2->Index = 1;
-            array<System::Windows::Forms::MenuItem^>^ __mcTemp__3 = gcnew array<System::Windows::Forms::MenuItem^>(1);
+            cli::array<System::Windows::Forms::MenuItem^>^ __mcTemp__3 = gcnew cli::array<System::Windows::Forms::MenuItem^>(1);
 			__mcTemp__3[0] = this->about_item;
 			this->menuItem2->MenuItems->AddRange(__mcTemp__3);
 			this->menuItem2->Text = L"Help";
@@ -1076,7 +1071,7 @@ protected:	void Dispose(Boolean disposing)
     private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e)
 			 {
 				 // sets the Card Drawn image to back_bj.bmp wich is the 54th item in the cardlist
-			  card_drawn->Image = cardlist->Images->get_Item(54);
+              card_drawn->Image = cardlist->Images[54];
 				 // initilizes some textboxes on the main form to 0
 			  computerscore_textbox->Text = L"0";
 			  computerwin_textbox->Text = L"0";
@@ -1120,11 +1115,11 @@ protected:	void Dispose(Boolean disposing)
     private: System::Void menuItem3_Click(System::Object^  sender, System::EventArgs^  e)
 		 {
 		   // pops up a message box       
-          int x = MessageBox::Show(L"Exit Blackjack ?", L"", MessageBoxButtons::YesNo);
-           // if the user clicks no the while loop ends and the user can go on with the rest of the program
-           
+          System::Windows::Forms::DialogResult x = MessageBox::Show(L"Exit Blackjack ?", L"", MessageBoxButtons::YesNo);
+		   // if the user clicks no the while loop ends and the user can go on with the rest of the program
+
 		   // if the user clicks yes Close everything down.
-		   if( x == DialogResult::Yes)
+		   if( x == System::Windows::Forms::DialogResult::Yes)
 		   {
                save_game(); // function that writes current game information to a file wich is then processed
 			                // one the program is ran again
@@ -1191,7 +1186,7 @@ protected:	void Dispose(Boolean disposing)
               cardcount_textbox->Text = gcnew System::String(temp.c_str()); // sets cardcount_textbox to the string(const char*)
 			  buffer->str(""); // clears out the buffer
           card cur_card = pc->get_currentcard();  // gets the card object for the current card
-		  card_drawn->Image = cardlist->Images->get_Item(  cur_card.index  );  // draws the current card
+          card_drawn->Image = cardlist->Images[ cur_card.index ];  // draws the current card
 		  display_bonus();
 		 }
 

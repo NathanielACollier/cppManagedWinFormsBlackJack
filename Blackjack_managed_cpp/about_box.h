@@ -42,14 +42,12 @@ namespace blackjack
 
 			 ostringstream *buffer;
         
-	protected: 
-		void Dispose(Boolean disposing)
+        protected: 
+		// Moved cleanup to destructor
+		~about_box()
 		{
-			if (disposing && components)
-			{
-				components->Dispose();
-			}
-			__super::Dispose(disposing);
+			if (components) delete components;
+			if (buffer) delete buffer;
 		}
     private: System::Windows::Forms::Button^  aboutbox_ok;
 

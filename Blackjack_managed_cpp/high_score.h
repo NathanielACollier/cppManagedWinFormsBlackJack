@@ -105,14 +105,14 @@ namespace blackjack
 	  write_score_table(); // write the score table to the screen
 	}
         
-	protected: 
-		void Dispose(Boolean disposing)
+    protected: 
+		// Moved cleanup to destructor
+		~high_score()
 		{
-			if (disposing && components)
-			{
-				components->Dispose();
-			}
-			__super::Dispose(disposing);
+			if (components) delete components;
+			if (save_game_list) delete save_game_list;
+			if (temp_game_save) delete temp_game_save;
+			if (buffer) delete buffer;
 		}
     private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Label^  label2;
