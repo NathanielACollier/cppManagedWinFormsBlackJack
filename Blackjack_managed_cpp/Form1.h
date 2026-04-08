@@ -99,6 +99,9 @@ namespace blackjack
 	private: System::Windows::Forms::MenuItem^  Exit_item;
 
 
+	private: System::ComponentModel::ComponentResourceManager^ resources;
+
+
 protected:
 		// Designer cleanup moved to destructor
 
@@ -492,7 +495,7 @@ protected:
 		void InitializeComponent(void)
 		{
             this->components = gcnew System::ComponentModel::Container();
-			System::ComponentModel::ComponentResourceManager^  resources = gcnew System::ComponentModel::ComponentResourceManager(Form1::typeid);
+			this->resources = gcnew System::ComponentModel::ComponentResourceManager(Form1::typeid);
 			this->MainMenu = gcnew System::Windows::Forms::MainMenu(this->components);
 			this->menuItem1 = gcnew System::Windows::Forms::MenuItem();
 			this->NewGame_item = gcnew System::Windows::Forms::MenuItem();
@@ -748,7 +751,7 @@ protected:
 			// 
 			// cardlist
 			// 
-            this->cardlist->ImageStream = (safe_cast<System::Windows::Forms::ImageListStreamer^  >(resources->GetObject(L"cardlist.ImageStream")));
+            this->cardlist->ImageStream = LoadImageListStreamerFromResource();
 			this->cardlist->TransparentColor = System::Drawing::Color::Transparent;
             this->cardlist->Images->SetKeyName(0, L"");
 			this->cardlist->Images->SetKeyName(1, L"");
@@ -1043,7 +1046,7 @@ protected:
 			this->Controls->Add(this->CardCountLabel);
 			this->Controls->Add(this->cardcount_textbox);
 			this->Controls->Add(this->hand_textbox);
-            this->Icon = (safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
+            this->Icon = (safe_cast<System::Drawing::Icon^  >(this->resources->GetObject(L"$this.Icon")));
 			this->Menu = this->MainMenu;
 			this->Name = L"Form1";
 			this->Text = L"Blackjack";
@@ -1084,6 +1087,30 @@ protected:
 			  shuffle(); // the function shuffles the constant card array 'deck' from the card.h file
 						 // into a new card array called sdeck 'shuffled deck'
 			 }
+
+
+
+
+	System::Windows::Forms::ImageListStreamer^ LoadImageListStreamerFromResource()
+	{
+		Object^ obj = this->resources->GetObject(L"cardlist.ImageStream");
+		if (obj != nullptr)
+		{
+			System::Windows::Forms::ImageListStreamer^ streamer = dynamic_cast<System::Windows::Forms::ImageListStreamer^>(obj);
+			if (streamer != nullptr)
+			{
+				return streamer;
+			}
+			else
+			{
+				throw gcnew System::InvalidCastException(L"Failed to cast resource to ImageListStreamer");
+			}
+		}
+		else
+		{
+			throw gcnew System::InvalidOperationException(L"Resource 'cardlist.ImageStream' not found");
+		}
+	}
            
 			 /*
               Function called when the user clicks on the button

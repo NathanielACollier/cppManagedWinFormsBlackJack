@@ -102,5 +102,11 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Data" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="about_box.resX" />
+    <EmbeddedResource Include="chat.resX" />
+    <EmbeddedResource Include="Form1.resx" />
+    <EmbeddedResource Include="high_score.resx" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
