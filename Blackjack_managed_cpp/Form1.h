@@ -1046,7 +1046,7 @@ protected:
 			this->Controls->Add(this->CardCountLabel);
 			this->Controls->Add(this->cardcount_textbox);
 			this->Controls->Add(this->hand_textbox);
-            this->Icon = (safe_cast<System::Drawing::Icon^  >(this->resources->GetObject(L"$this.Icon")));
+            this->Icon = gcnew System::Drawing::Icon("blackjack.ico");
 			this->Menu = this->MainMenu;
 			this->Name = L"Form1";
 			this->Text = L"Blackjack";
