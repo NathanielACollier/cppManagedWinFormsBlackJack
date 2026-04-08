@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -34,7 +35,29 @@ for (int i = 0; i < imgList.Images.Count; i++)
 {
     var img = imgList.Images[i];
     string resourceImageHash = GetImageHash(img);
-    var matchingCard = cardFilesList.FirstOrDefault(c => c.DataHash == resourceImageHash);
+    string resourcePixelHash = GetImageHashByPixels(img);
+
+    var fileDataCardMatches = cardFilesList.Where(c => c.DataHash == resourceImageHash).ToList();
+
+    if(!fileDataCardMatches.Any())
+    {
+        Console.WriteLine($"No match found for index {i} by file");
+    }
+
+    var pixelDataCardMatches = cardFilesList.Where(c => c.PixelHash == resourcePixelHash).ToList();
+
+    if (!pixelDataCardMatches.Any())
+    {
+        Console.WriteLine($"No match found for index {i} by pixels");
+    }
+
+    var matchingCard = fileDataCardMatches.FirstOrDefault() ??
+                        pixelDataCardMatches.FirstOrDefault();
+
+    if(matchingCard == null)
+    {
+        continue;
+    }
 
     Console.WriteLine($"Image[{i}]: Size={img.Size}, PixelFormat={img.PixelFormat}, Filename: {matchingCard.FileName}");
 
@@ -82,11 +105,52 @@ byte[] ParseDataBytesFromResource(string rexFilePath, string key)
 
 string GetImageHash(System.Drawing.Image image)
 {
-    using (var ms = new System.IO.MemoryStream())
+    // Convert to Bitmap to ensure consistent format
+    using (var bitmap = new Bitmap(image))
     {
-        image.Save(ms, image.RawFormat);
-        byte[] hash = System.Security.Cryptography.SHA256.Create().ComputeHash(ms.ToArray());
-        return Convert.ToBase64String(hash);
+        using (var ms = new System.IO.MemoryStream())
+        {
+            // Save as PNG to get consistent, lossless format
+            bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            byte[] hash = System.Security.Cryptography.SHA256.Create().ComputeHash(ms.ToArray());
+            return Convert.ToBase64String(hash);
+        }
+    }
+}
+
+
+string GetImageHashByPixels(Image image)
+{
+    try
+    {
+        using (var bitmap = new Bitmap(image))
+        {
+            // Create a simple hash based on pixel data
+            var pixelData = new List<byte>();
+
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    var pixel = bitmap.GetPixel(x, y);
+                    pixelData.Add(pixel.R);
+                    pixelData.Add(pixel.G);
+                    pixelData.Add(pixel.B);
+                    pixelData.Add(pixel.A);
+                }
+            }
+
+            using (var ms = new System.IO.MemoryStream())
+            {
+                ms.Write(pixelData.ToArray(), 0, pixelData.Count);
+                byte[] hash = System.Security.Cryptography.SHA256.Create().ComputeHash(ms.ToArray());
+                return Convert.ToBase64String(hash);
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        throw new Exception($"Error hashing by pixels: {ex.Message}");
     }
 }
 
@@ -98,12 +162,14 @@ List<ImageInformation> LoadCardFiles(string folderPath)
     {
         var fileImg = System.Drawing.Image.FromFile(filePath);
         string fileHash = GetImageHash(fileImg);
+        string pixelHash = GetImageHashByPixels(fileImg);
         cards.Add(new ImageInformation
         {
             Index = 0,
             FileName = System.IO.Path.GetFileName(filePath),
             RelativePath = System.IO.Path.GetRelativePath(folderPath, filePath),
-            DataHash = fileHash
+            DataHash = fileHash,
+            PixelHash = pixelHash,
         });
     }
     return cards;
@@ -116,4 +182,5 @@ class ImageInformation
     public string FileName { get; set; }
     public string RelativePath { get; set; }
     public string DataHash { get; set; }
+    public string PixelHash { get; set; }
 }
