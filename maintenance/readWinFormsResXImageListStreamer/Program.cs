@@ -22,6 +22,10 @@ string cardsFolderPath = System.IO.Path.Combine(
         "cards"
     );
 
+string outputFolderPath = System.IO.Directory.CreateDirectory(
+        System.IO.Path.Combine(AppContext.BaseDirectory, "output")
+    ).FullName;
+
 List<ImageInformation> cardFilesList = LoadCardFiles(folderPath: cardsFolderPath);
 
 byte[] data = ParseDataBytesFromResource(rexFilePath: resxFilePath, key: "cardlist.ImageStream");
@@ -56,6 +60,8 @@ for (int i = 0; i < imgList.Images.Count; i++)
 
     if(matchingCard == null)
     {
+        // write these out so we can visualy figure out what is wrong
+        img.Save(filename: System.IO.Path.Combine(outputFolderPath, $"unmached_{i}.bmp"), format: System.Drawing.Imaging.ImageFormat.Bmp);
         continue;
     }
 
