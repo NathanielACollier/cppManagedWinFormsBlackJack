@@ -102,10 +102,24 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Data" />
   </ItemGroup>
-  <ItemGroup>
+
+
+	<ItemGroup>
+		<Content Include="cards\**\*.bmp">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+
+	<ItemGroup>
     <EmbeddedResource Include="about_box.resX" />
     <EmbeddedResource Include="chat.resX" />
-    <EmbeddedResource Include="Form1.resx" />
+	  
+	  <EmbeddedResource Include="Form1.resx">
+		  <Generator>ResXFileCodeGenerator</Generator>
+		  <LastGenOutput>Form1.resx</LastGenOutput>
+	  </EmbeddedResource>
+	  
     <EmbeddedResource Include="high_score.resx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -751,7 +751,7 @@ protected:
 			// 
 			// cardlist
 			// 
-            this->cardlist->ImageStream = LoadImageListStreamerFromResource();
+            this->cardlist = LoadCardsImageListFromCardFiles();
 			this->cardlist->TransparentColor = System::Drawing::Color::Transparent;
             this->cardlist->Images->SetKeyName(0, L"");
 			this->cardlist->Images->SetKeyName(1, L"");
@@ -1091,24 +1091,49 @@ protected:
 
 
 
-	System::Windows::Forms::ImageListStreamer^ LoadImageListStreamerFromResource()
+	System::Windows::Forms::ImageList^ LoadCardsImageListFromCardFiles()
 	{
-		Object^ obj = this->resources->GetObject(L"cardlist.ImageStream");
-		if (obj != nullptr)
+		try
 		{
-			System::Windows::Forms::ImageListStreamer^ streamer = dynamic_cast<System::Windows::Forms::ImageListStreamer^>(obj);
-			if (streamer != nullptr)
+			// Create new ImageList
+			System::Windows::Forms::ImageList^ imageList = gcnew System::Windows::Forms::ImageList();
+			imageList->ImageSize = System::Drawing::Size(71, 96); // Adjust size as needed
+			imageList->TransparentColor = System::Drawing::Color::Transparent;
+
+			// Get the path to your cards folder
+			System::String^ currentDir = System::IO::Directory::GetCurrentDirectory();
+			System::String^ cardsPath = System::IO::Path::Combine(currentDir, "cards");
+
+			// Check if folder exists
+			if (!System::IO::Directory::Exists(cardsPath))
 			{
-				return streamer;
+				throw gcnew System::IO::DirectoryNotFoundException("Cards folder not found: " + cardsPath);
 			}
-			else
+
+			// Get all image files from the folder
+			cli::array<System::String^>^ imageFiles = System::IO::Directory::GetFiles(cardsPath, "*.bmp");
+
+			// Load each image
+			for (int i = 0; i < imageFiles->Length; i++)
 			{
-				throw gcnew System::InvalidCastException(L"Failed to cast resource to ImageListStreamer");
+				try
+				{
+					System::Drawing::Image^ img = System::Drawing::Image::FromFile(imageFiles[i]);
+					imageList->Images->Add(img);
+				}
+				catch (System::Exception^ ex)
+				{
+					// Handle individual file errors but continue loading others
+					System::Console::WriteLine("Error loading image " + imageFiles[i] + ": " + ex->Message);
+				}
 			}
+
+			return imageList;
 		}
-		else
+		catch (System::Exception^ ex)
 		{
-			throw gcnew System::InvalidOperationException(L"Resource 'cardlist.ImageStream' not found");
+			System::Windows::Forms::MessageBox::Show("Error loading cards: " + ex->Message);
+			return nullptr;
 		}
 	}
            
