@@ -10,4 +10,6 @@
   <Project Path="Blackjack_managed_cpp/Blackjack_managed_cpp.vcxproj" Id="3783fcdd-1917-4a64-9fad-e5c55329f72b">
     <Platform Project="Win32" />
   </Project>
+  <Project Path="nac.CardImage/nac.CardImage.csproj" Id="2d77a8ae-0762-46a5-9bd2-b1d5fcb04fe0" />
+  <Project Path="Tests/Tests.csproj" Id="5f60ad24-d71b-4bc4-a794-ede54ffb439e" />
 </Solution>

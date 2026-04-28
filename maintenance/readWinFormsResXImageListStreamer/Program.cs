@@ -13,12 +13,17 @@ string blackJackProjectFolderPath = System.IO.Path.Combine(
         "../../../../../blackjack_managed_cpp/"
         );
 
+string nacCardsProjectFolderPath = System.IO.Path.Combine(
+    AppContext.BaseDirectory,
+        "../../../../../nac.CardImage/"
+        );
+
 string resxFilePath = System.IO.Path.Combine(
         blackJackProjectFolderPath,
         "Form1.resx"
     );
 string cardsFolderPath = System.IO.Path.Combine(
-        blackJackProjectFolderPath,
+        nacCardsProjectFolderPath,
         "cards"
     );
 
