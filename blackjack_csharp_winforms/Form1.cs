@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -1001,6 +1003,7 @@ namespace blackjack
         {
             string[] cardImageNames = new string[]
             {
+                // order defines cardlist index = card.Index in CardDeck.DeckCards
                 "ace_heart.bmp", "ace_diamond.bmp", "ace_spade.bmp", "ace_club.bmp",
                 "two_heart.bmp", "two_diamond.bmp", "two_spade.bmp", "two_club.bmp",
                 "three_heart.bmp", "three_diamond.bmp", "three_spade.bmp", "three_club.bmp",
@@ -1020,21 +1023,27 @@ namespace blackjack
                 "back_bj.bmp", "back_bj.bmp", "back_bj.bmp", "back_bj.bmp"
             };
 
-            string resourcePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
+            List<string> cardResources = nac.CardImage.Card.GetCardList();
 
             cardlist.ImageSize = new Size(71, 96);
             cardlist.ColorDepth = ColorDepth.Depth24Bit;
 
             foreach (string imageName in cardImageNames)
             {
-                string imagePath = Path.Combine(resourcePath, imageName);
-                if (File.Exists(imagePath))
+                string resourceName = cardResources
+                            .FirstOrDefault(name =>
+                                  name.EndsWith("." + imageName,
+                                                 StringComparison.OrdinalIgnoreCase));
+
+                if (resourceName == null)
                 {
-                    cardlist.Images.Add(Image.FromFile(imagePath));
+                    throw new Exception($"Card image [{imageName}] not found in nac.CardImage");
                 }
-                else
+
+                using (Stream imgStream =
+                            typeof(nac.CardImage.Card).Assembly.GetManifestResourceStream(resourceName))
                 {
-                    throw new Exception($"Image file [{imageName}] not found");
+                    cardlist.Images.Add(Image.FromStream(imgStream));
                 }
             }
         }
